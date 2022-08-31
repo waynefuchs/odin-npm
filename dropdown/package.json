@@ -1,0 +1,15 @@
+{
+  "name": "dropdown",
+  "version": "1.0.0",
+  "description": "Dropdown Menus",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dropdown menu"
+  ],
+  "author": "Wayne Fuchs",
+  "license": "ISC"
+}
