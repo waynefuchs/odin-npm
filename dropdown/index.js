@@ -1,3 +1,8 @@
+const MOBILEMENU = "#mobile-menu";
+const DROPMENU = ".drop-menu";
+const HAMBURGER = "#hamburger";
+const HAMBURGERBTN = "#hamburger-btn";
+
 function clearClass(classText, except = null) {
   const allClicked = Array.from(
     document.querySelectorAll(`.${classText}`)
@@ -20,6 +25,10 @@ function addEventMouseClick(li) {
   });
 }
 
+function addEventResize() {
+  window.addEventListener("resize", manageHamburger);
+}
+
 function dropdown(dropdowns) {
   dropdowns.forEach((li) => {
     addEventMouseEnter(li);
@@ -27,11 +36,78 @@ function dropdown(dropdowns) {
   });
 }
 
-const attach = (selector) => {
-  const elements = Array.from(document.querySelectorAll(selector));
+const attach = () => {
+  const elements = Array.from(document.querySelectorAll(DROPMENU));
   if (elements.length <= 0) return;
+
+  addEventResize();
   dropdown(elements);
+  manageHamburger();
 };
+
+function clearHamburger() {
+  const mobileMenu = document.querySelector(MOBILEMENU);
+  const dropMenu = document.querySelector(DROPMENU);
+  const hamburger = document.querySelector(HAMBURGER);
+  const hamburgerBtn = document.querySelector(HAMBURGERBTN);
+  hamburgerBtn.classList.remove("hidden");
+
+  //MOVE <--
+  Array.from(hamburger.children)
+    .forEach((element) =>
+    mobileMenu.insertBefore(element, hamburgerBtn) // At the end
+  );
+}
+
+function manageHamburger() {
+  let hamburgerCount = 0;
+  clearHamburger();
+  const hamburger = document.querySelector(HAMBURGER);
+  const hamburgerBtn = document.querySelector(HAMBURGERBTN);
+  const data = getGridData();
+  const dropdowns = Array.from(document.querySelectorAll(DROPMENU)).filter(
+    (element) => !element.contains(hamburger)
+  );
+
+  dropdowns.reverse().every((li) => {
+    // console.log(li);
+    const data = getGridData();
+    if (data.rowCount <= 1) {
+      if (hamburgerCount <= 0) hamburgerBtn.classList.add("hidden");
+      console.log("ERM");
+      return false;
+    }
+
+    // MOVE -->
+    hamburger.insertBefore(li, hamburger.firstChild);
+    hamburgerCount += 1;
+    return true;
+  });
+
+  // console.log(data);
+}
+
+function getGridData() {
+  const mobileMenu = document.querySelector(MOBILEMENU);
+  const gridComputedStyle = window.getComputedStyle(mobileMenu);
+
+  return {
+    rowCount: gridComputedStyle
+      .getPropertyValue("grid-template-rows")
+      .split(" ").length,
+    columnCount: gridComputedStyle
+      .getPropertyValue("grid-template-columns")
+      .split(" ").length,
+    rowSizes: gridComputedStyle
+      .getPropertyValue("grid-template-rows")
+      .split(" ")
+      .map(parseFloat),
+    columnSizes: gridComputedStyle
+      .getPropertyValue("grid-template-columns")
+      .split(" ")
+      .map(parseFloat),
+  };
+}
 
 (function () {
   "use strict";
