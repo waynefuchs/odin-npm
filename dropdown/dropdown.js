@@ -36,7 +36,7 @@ function dropdown(dropdowns) {
   });
 }
 
-const attach = () => {
+const dropdownAttach = () => {
   const elements = Array.from(document.querySelectorAll(DROPMENU));
   if (elements.length <= 0) return;
 
@@ -47,15 +47,11 @@ const attach = () => {
 
 function clearHamburger() {
   const mobileMenu = document.querySelector(MOBILEMENU);
-  const dropMenu = document.querySelector(DROPMENU);
   const hamburger = document.querySelector(HAMBURGER);
   const hamburgerBtn = document.querySelector(HAMBURGERBTN);
   hamburgerBtn.classList.remove("hidden");
-
-  //MOVE <--
-  Array.from(hamburger.children)
-    .forEach((element) =>
-    mobileMenu.insertBefore(element, hamburgerBtn) // At the end
+  Array.from(hamburger.children).forEach((element) =>
+    mobileMenu.insertBefore(element, hamburgerBtn)
   );
 }
 
@@ -74,7 +70,6 @@ function manageHamburger() {
     const data = getGridData();
     if (data.rowCount <= 1) {
       if (hamburgerCount <= 0) hamburgerBtn.classList.add("hidden");
-      console.log("ERM");
       return false;
     }
 
@@ -83,8 +78,6 @@ function manageHamburger() {
     hamburgerCount += 1;
     return true;
   });
-
-  // console.log(data);
 }
 
 function getGridData() {
@@ -111,6 +104,6 @@ function getGridData() {
 
 (function () {
   "use strict";
-  exports.attach = attach;
+  exports.dropdownAttach = dropdownAttach;
   exports.clearClass = clearClass;
 })();

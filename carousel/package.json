@@ -1,14 +1,14 @@
 {
-  "name": "dropdown",
+  "name": "carousel",
   "version": "1.0.0",
-  "description": "Dropdown Menus",
+  "description": "Simple Carousel",
   "private": true,
-  "main": "dropdown.js",
+  "main": "carousel.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "dropdown menu"
+    "carousel"
   ],
   "author": "Wayne Fuchs",
   "license": "ISC"
